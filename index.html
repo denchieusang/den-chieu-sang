@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tổng Kho Đèn & Quạt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, sans-serif; background: #f8f9fa; margin: 0; padding-top: 60px; text-align: center; }
+        
+        /* Menu nhỏ gọn dính trên cùng */
+        .menu { background: #222; position: fixed; top: 0; width: 100%; z-index: 100; display: flex; justify-content: center; }
+        .menu a { color: white; padding: 12px 15px; text-decoration: none; font-size: 13px; font-weight: bold; text-transform: uppercase; }
+        .menu a:hover { background: #444; }
+
+        h1 { font-size: 1.2rem; margin: 20px 0 5px; color: #333; }
+        .category-title { margin: 25px 0 10px; color: #d32f2f; font-size: 14px; font-weight: bold; border-bottom: 1px solid #ddd; display: inline-block; padding-bottom: 3px; }
+
+        /* Chia 2 ảnh một hàng */
+        .gallery { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+            padding: 10px; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+
+        .product { 
+            background: white; 
+            padding: 8px; 
+            border-radius: 6px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+
+        .product img { 
+            width: 100%; 
+            aspect-ratio: 1 / 1; 
+            object-fit: cover; 
+            border-radius: 4px; 
+        }
+
+        .product p { 
+            margin: 8px 0 0; 
+            font-size: 12px; 
+            font-weight: 600; 
+            color: #444; 
+            line-height: 1.2;
+            height: 30px; 
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu" id="nav-menu"></div>
+    <h1>TỔNG KHO SẢN PHẨM</h1>
+    <div id="main-content"></div>
+
+    <script>
+        // ==========================================
+        // KHU VỰC CHỈNH SỬA: ĐIỀN SẢN PHẨM TẠI ĐÂY
+        // ==========================================
+        const data = {
+            "ĐÈN CHÙM": [
+                ["7532.jpg", "Đèn chùm pha lê"],
+                ["den-2.jpg", "Đèn chùm tân cổ điển"],
+                ["den-3.jpg", "Đèn chùm hiện đại"],
+                ["den-4.jpg", "Đèn chùm cao cấp"],
+            ],
+            "QUẠT TRẦN": [
+                ["quat-1.jpg", "Quạt trần 5 cánh"],
+                ["quat-2.jpg", "Quạt trần giấu cánh"],
+                ["quat-3.jpg", "Quạt trần trang trí"],
+                ["quat-4.jpg", "Quạt trần cổ điển"],
+            ]
+        };
+        // ==========================================
+
+        const menuBox = document.getElementById('nav-menu');
+        const contentBox = document.getElementById('main-content');
+
+        for (const category in data) {
+            // Tự động tạo Menu dựa trên danh mục
+            const slug = category.replace(/\s+/g, '-').toLowerCase();
+            menuBox.innerHTML += `<a href="#${slug}">${category}</a>`;
+
+            // Tạo tiêu đề khu vực
+            let html = `<div id="${slug}" class="category-title">✦ ${category} ✦</div><div class="gallery">`;
+            
+            // Tạo danh sách ảnh
+            data[category].forEach(item => {
+                html += `
+                    <div class="product">
+                        <img src="${item[0]}" loading="lazy">
+                        <p>${item[1]}</p>
+                    </div>`;
+            });
+            
+            html += `</div>`;
+            contentBox.innerHTML += html;
+        }
+    </script>
+</body>
+</html>
